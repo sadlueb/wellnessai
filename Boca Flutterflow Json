@@ -1,0 +1,29 @@
+{
+  "projectName": "BOCA_MVP",
+  "theme": {
+    "primaryColor": "#A67C52",
+    "secondaryColor": "#F4EDE4",
+    "accentColor": "#1F1F1F",
+    "fontFamily": "PlayfairDisplay",
+    "buttonRadius": 24,
+    "inputStyle": {
+      "borderRadius": 16,
+      "padding": 12
+    }
+  },
+  "pages": [
+    ...
+    {
+      "name": "ProductCatalogScreen",
+      "widgets": [
+        {"type": "Dropdown", "properties": {"label": "Цель", "options": ["Расслабление", "Фокус", "Сон", "Энергия"]}},
+        {"type": "Dropdown", "properties": {"label": "Состояние", "options": ["Тревожность", "Переутомление", "ПМС", "Усталость"]}},
+        {"type": "Dropdown", "properties": {"label": "Форм-фактор", "options": ["Аромаспрей", "Масло", "Косметика", "Напиток"]}},
+        {"type": "Dropdown", "properties": {"label": "Сортировка", "options": ["По популярности", "По рейтингу", "По новизне"]}},
+        {"type": "ListView", "properties": {"source": "Products", "filterable": true, "sortable": true}},
+        {"type": "Button", "properties": {"text": "Перейти в корзину", "action": "navigate", "destination": "CartScreen"}}
+      ]
+    },
+    ...
+  ]
+}
