@@ -12,7 +12,68 @@
     }
   },
   "pages": [
-    ...
+    {
+      "name": "WelcomeScreen",
+      "widgets": [
+        {"type": "Image", "properties": {"imageUrl": "logo_url"}},
+        {"type": "Button", "properties": {"text": "Начать", "action": "navigate", "destination": "ProfilingScreen", "style": {"backgroundColor": "#A67C52", "textColor": "#FFFFFF", "borderRadius": 24, "icon": "arrow_forward"}}},
+        {"type": "Button", "properties": {"text": "Что такое BOCA?", "action": "showDialog"}}
+      ]
+    },
+    {
+      "name": "ProfilingScreen",
+      "widgets": [
+        {
+          "type": "Dropdown",
+          "properties": {
+            "label": "Пол",
+            "placeholder": "Выбери свой пол",
+            "description": "Это поможет нам персонализировать рекомендации",
+            "options": ["Мужской", "Женский"]
+          }
+        },
+        {
+          "type": "CheckboxGroup",
+          "properties": {
+            "label": "Эмоции",
+            "placeholder": "Выбери, что чувствуешь сейчас",
+            "description": "Выбери эмоции, которые ты испытываешь сегодня",
+            "options": ["Тревожность", "Усталость", "Фокус"]
+          }
+        },
+        {"type": "Button", "properties": {"text": "Подключить HealthKit", "action": "navigate", "destination": "HealthIntegrationScreen"}}
+      ]
+    },
+    {
+      "name": "HealthIntegrationScreen",
+      "widgets": [
+        {"type": "Text", "properties": {"text": "Подключи HealthKit для персонализации рекомендаций"}},
+        {"type": "Button", "properties": {"text": "Подключить", "action": "customCodeWidget"}}
+      ]
+    },
+    {
+      "name": "HomeScreen",
+      "widgets": [
+        {"type": "Text", "properties": {"text": "Твои рекомендации на сегодня:"}},
+        {"type": "ListView", "properties": {"source": "GPTRecommendations"}},
+        {
+          "type": "ButtonBar",
+          "properties": {
+            "buttons": [
+              {"text": "❤️ Нравится", "action": "logFeedback", "style": {"icon": "favorite", "backgroundColor": "#F4EDE4"}},
+              {"text": "📝 Заметка", "action": "openNoteDialog", "style": {"icon": "note_add", "backgroundColor": "#F4EDE4"}},
+              {"text": "💾 Сохранить", "action": "saveToFavorites", "style": {"icon": "bookmark", "backgroundColor": "#F4EDE4"}}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TelegramWebViewScreen",
+      "widgets": [
+        {"type": "WebView", "properties": {"url": "https://t.me/your_bot_link"}}
+      ]
+    },
     {
       "name": "ProductCatalogScreen",
       "widgets": [
@@ -24,6 +85,25 @@
         {"type": "Button", "properties": {"text": "Перейти в корзину", "action": "navigate", "destination": "CartScreen"}}
       ]
     },
-    ...
+    {
+      "name": "CartScreen",
+      "widgets": [
+        {"type": "ListView", "properties": {"source": "CartItems"}},
+        {"type": "Button", "properties": {"text": "Оплатить", "action": "StripePayment"}}
+      ]
+    }
+  ],
+  "navigation": [
+    {"from": "WelcomeScreen", "to": "ProfilingScreen"},
+    {"from": "ProfilingScreen", "to": "HealthIntegrationScreen"},
+    {"from": "HealthIntegrationScreen", "to": "HomeScreen"},
+    {"from": "HomeScreen", "to": "ProductCatalogScreen"},
+    {"from": "ProductCatalogScreen", "to": "CartScreen"},
+    {"from": "HomeScreen", "to": "TelegramWebViewScreen"}
+  ],
+  "integrations": [
+    {"name": "HealthKit", "type": "customWidget"},
+    {"name": "GPTRecommendations", "type": "webhook", "url": "https://make.com/webhook_url"},
+    {"name": "Stripe", "type": "payment"}
   ]
 }
