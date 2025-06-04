@@ -1,0 +1,36 @@
+{
+  "scenario": {
+    "name": "LogUserProductAction",
+    "modules": [
+      {
+        "module": "webhook",
+        "name": "Receive Action",
+        "type": "custom_webhook",
+        "parameters": {
+          "name": "log_user_product_action",
+          "fields": [
+            {"name": "userId", "type": "text"},
+            {"name": "action", "type": "text"},
+            {"name": "productId", "type": "text"},
+            {"name": "timestamp", "type": "datetime"}
+          ]
+        }
+      },
+      {
+        "module": "airtable",
+        "name": "Store Action",
+        "type": "create_record",
+        "parameters": {
+          "base_id": "appXXXXXXXXXXXXXX",
+          "table_id": "tblXXXXXXXXXXXXXX",
+          "fields": {
+            "User ID": "{{userId}}",
+            "Action": "{{action}}",
+            "Product ID": "{{productId}}",
+            "Timestamp": "{{timestamp}}"
+          }
+        }
+      }
+    ]
+  }
+}
