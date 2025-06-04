@@ -1,0 +1,40 @@
+{
+  "scenario": {
+    "name": "ProfileToRecommendation",
+    "modules": [
+      {
+        "module": "webhook",
+        "name": "Receive Profile",
+        "type": "custom_webhook",
+        "parameters": {
+          "name": "profile_webhook",
+          "fields": [
+            {"name": "userId", "type": "text"},
+            {"name": "gender", "type": "text"},
+            {"name": "emotion", "type": "text"},
+            {"name": "goal", "type": "text"},
+            {"name": "timestamp", "type": "datetime"}
+          ]
+        }
+      },
+      {
+        "module": "openai",
+        "name": "Generate Recommendation",
+        "type": "completion",
+        "parameters": {
+          "prompt": "см. README.md",
+          "model": "gpt-3.5-turbo",
+          "max_tokens": 200
+        }
+      },
+      {
+        "module": "webhook",
+        "name": "Return Text",
+        "type": "http_response",
+        "parameters": {
+          "body": "{\"recommendation\": \"{{1.text}}\"}"
+        }
+      }
+    ]
+  }
+}
